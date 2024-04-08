@@ -1,0 +1,275 @@
+🚀 Advanced C# Topics
+
+    👉Generics :-
+
+    With Generics we create a class once and we use it multiple times
+
+    Generics have a parameter and they are specified with <T> 
+    
+    public class GenericList<T>
+    {
+        public void Add(T value)
+        {
+
+        }
+        
+        public T this[int index]
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var numbers = new GenericList<int>();
+            numbers.Add(10);
+
+            var books = new GenericList<Book>();
+            books.Add(new Book());
+        }
+    }
+
+    In the above example we are passing one parameter, we can also pass multiple parameters
+    
+    public class GenericDictionary<TKey, TValue>
+    {
+        public void Add(TKey key, TValue value)
+        {
+
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var dictionary = new GenericDictionary<string Book>();
+            dictionary.Add("1234", new Book());
+        }
+    }
+
+    Constraints on Generics
+
+    public class Utilities<T> where T : IComparable
+    {
+        public int Max(int a, int b)
+        {
+            return a > b ? a : b;
+        }
+
+        public T Max(T a, T b)
+        {
+            return a.CompareTo(b) > 0 ? a : b;
+        }
+    }
+
+    we have five constraints 
+    where T : IComparable // interface
+    where T : Product // class type
+    where T : struct // value type
+    where T : class // reference type
+    where T : new() // default constructor
+
+    👉Delegates (*Revisit*) :-
+
+    Delegate is an object that knows how to call a method (or a group of methods)
+
+    In simple words delegate is a reference or pointer to a function
+
+    We need delegates for designing extensible and flexible applications (ex:- used for designing frameworks)
+
+    Example -
+    We are designing a framework that process our photos
+
+    Let say we designed a framework in which it has let say 10 methods to process our photo, later there might
+    be a user which required a new method to process his photo but that method is not available, so we need to
+    add new method to framework, compile and re-deploy, this will continue as new methods come in, this is not 
+    a best way to do things, this is where delegates will help with which we can extend the application without
+    re-compile and re-deploy everytime.
+
+    same problem can be solved with interafces using polymorphism
+     
+    Every delegate we create in c# with delegate keyword is a class that derives form MulitcastDelegate
+    MulitcastDelegate is derives from Delegate
+
+    We can also use existing delegate in dotnet framework instead of custom delegate
+
+    In dotnet we have two delegates that are generic
+    1. Action
+    2. Func
+
+    Func points to a method that returns a value
+    Action points to method that returns void
+
+    Interfaces or Delegates ?
+
+    use a delegate when 
+    -> An eventing design pattern is used.
+    -> The caller doesn't need to access other properties or methods on the object implementing the method
+
+    👉Lambda Expressions
+    Lambda expression is nothing but an anonymous method, it is a method which does not has 
+    1. No access modifier
+    2. No name
+    3. No return statement
+
+    Why do we use anonymous methods ?
+    for convenience and it will also make our code readable
+
+    Syntax for lambda expression
+    args => expression // read this as args goes to some expression
+
+    ex:-
+    number => number*number
+
+    Func<int, int> square = number => number*number;
+
+    👉Events and Delegates
+    Event is a mechanism for communication between objects
+
+    Used in builiding loosely coupled applications
+
+    Helps extending applications
+
+    Delegate is agreement / contract between publisher and subscriber
+    It determines the signature of the event handler method in subscriber.
+
+    We can define event handler without delegates also
+
+    public event EventHandler<EventArgs> Even_Name;
+
+    👉Extension methods
+    Extension methods allow us to add methods to an existing class without
+    1. Changing its source code, or
+    2. Creating a new class that inherits from it
+
+    👉LINQ
+    Language Integrated Query
+    It Gives the capability to query objects 
+
+    With LINQ we can query
+    1. Objects in memory, ex Collections (LINQ to Objects)
+    2. Databases (LINQ to Entities)
+    3. XML (LINQ to XML)
+    4. ADO.NET Data Sets (LINQ to Data Sets)
+
+    Some of the different linq methods are
+    1. where
+    2. Single
+    3. SingleOrDefault
+    4. FirstOrDefault
+    5. LastOrDefault
+    6. Skip
+    7. Take
+    8. OrderBy
+    9. Select
+    10. Max
+    11. Min
+    12. Sum
+    13. Average
+
+    👉Nullable Types
+    value types cannot have null
+    ex- bool hasAccess = true; // or false 
+    hasAccess has value true either default value false
+
+    for value types we define nullable as follows
+
+    Nullable<DateTime> date = null; or
+    DateTime? date = null;
+
+    DateTime? date1 = null;
+    DateTime date2 = date1.GetValueOrDefault();
+
+    DateTime date3 = date1 ?? DateTime.Today; // null coleascing operator
+
+    👉Dynamics
+    Programming languages are divided into two types
+    1. Statically-typed languages: C#, Java
+    2. Dynamically typed languages: Ruby, Python, Javascript
+
+    In static languages type resolution is done at compile time
+    In Dynamic languages type resolution is done at run time
+
+    C# started as static language
+    .NET 4 added the dynamic capability, to improve interoperability with 
+    1. COM (eg writing office applications)
+    2. Dynamic languages (IronPython)
+
+    dynamic name = "Naveen";
+    name = 10;
+
+    With dynamic types we need to write more unit tests, to make sure our application 
+    behaves properly at run time
+
+    👉Exception Handling
+    We always need to have global exception handling block in our application.
+
+    👉Asynchronous programming with Async/Await
+
+    Synchronous Program Execution
+
+    1. Program is executed line by line, one at a time.
+    2. When a function is called, program execution has to wait until the function returns
+
+    1. ...
+    2. TimeConsumingProcess()
+    3. ...
+    4. ...
+
+    Asynchronous Program Execution
+
+    1. When a function is called, program execution continues to the next line, without waiting
+       for the function to complete
+
+    1. ...
+    2. TimeConsumingProcess(callback)
+    3. ...
+    4. ...
+
+    Asynchronous programming improves responsiveness of our application
+
+    Real-world examples
+    1. Windows media player
+    2. Web Browser (u can download from screen, but still ui does not stop functioning)
+
+    When to use Asynchronous?
+
+    1. Accessing the Web
+    2. Working with files and databases
+    3. Working with images
+
+    How ?
+    Traditional Approaches
+    1. Multi-threading
+    2. Callbacks
+
+    New approach since .NET 4.5
+    1. Async / Await
+
+    Windows Store Apps
+     -> Windows RunTime (WindowsRT)
+    
+    Windows Desktop Apps
+     -> Windows Presentation Framework (WPF)
+     -> Entity Framework
+    
+    Web Apps
+     -> ASP.NET MVC
+     -> Entity Framework
+
+
+      Learn Fundamentals 
+        1. Algorithms 
+        2. Data Structures 
+        3. Object-Oriented Programming 
+        4. Clean Coding 
+        5. Refactoring 
+    
+    https://www.hanselman.com/blog/
+    https://weblogs.asp.net/scottgu
+    https://odetocode.com/
+
+
